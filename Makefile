@@ -15,6 +15,7 @@ run: clean all
 $(BIN)/$(EXECUTABLE): $(SRC)/*.cpp
 	-mkdir -p $(BIN)
 	$(CXX) $(CXX_FLAGS) $^ -o $@
+	strip $@
 
 clean:
 	-rm $(BIN)/$(EXECUTABLE)

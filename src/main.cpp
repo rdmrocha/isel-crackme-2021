@@ -4,13 +4,26 @@
 #include <string.h>
 
 
+bool buggy_compare(char *a, char *b){
+    if (a == NULL || b == NULL) {
+        return false;
+    }
+    for (int i=0; a[i] != '\0' && b[i] != '\0'; i++) {
+        if(a[i] != b[i])
+            return false;
+    }
+    return true;
+}
+
 void nope() {
     puts("wrong password, try again!");
     exit(1);
 }
 
-void login(bool is_admin) {
-    printf("\n\nyou are logged in as %s\n\n", (is_admin ? "admin" : "user"));
+void login(char *rootPass, char *password) {
+    bool is_admin = buggy_compare(rootPass, password);
+    const char* user_type = is_admin ? "admin" : "user";
+    printf("\n\nyou are logged in as %s\n\n", user_type);
     exit(0);
 }
 
@@ -37,31 +50,6 @@ void fill_secure_root_password(char* buffer) {
     // printf("2 - %s %d\n", buffer, (int)buffer[4] + (int)buffer[2] + (int)buffer[3]);
 }
 
-
-
-
-
-bool buggy_compare(char *a, char *b){
-    if (a == NULL || b == NULL) {
-        return false;
-    }
-    for (int i=0; a[i] != '\0' && b[i] != '\0'; i++) {
-        if(a[i] != b[i])
-            return false;
-    }
-    return true;
-}
-
-
-
-
-
-
-
-
-
-
-
 int main() {
 
     char* password  = (char *)malloc(16);
@@ -79,7 +67,7 @@ int main() {
         nope();
     }
     for(int i = 0; i < 3; i++) {
-        if(*((char*)((int*)password)+i+2) < 48 || *((char*)((int*)password)+2+i) >= 127) {
+        if((int)password[i+2] < 48 || (int)password[i+2] >= 127) {
             nope();
         }
     }
@@ -87,6 +75,6 @@ int main() {
         nope();
     }
 
-    login(buggy_compare(rootPass, password));
+    login(rootPass, password);
     return 0;
 }

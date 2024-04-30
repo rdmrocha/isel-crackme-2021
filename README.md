@@ -1,4 +1,4 @@
-# ISEL 2021 crackme
+# ISEL crackme
 
 Very simple barebones _crackme_ exercise for [Ghidra](https://github.com/NationalSecurityAgency/ghidra) (or similar tools)
 
